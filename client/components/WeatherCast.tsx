@@ -6,8 +6,28 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import { Player } from '@lottiefiles/react-lottie-player'
+import { ChangeEvent, useState } from 'react'
+import { Weather } from '../typing'
+import { getWeather } from '../apis/weatherDataApi'
 
 function WeatherCasting() {
+  const [searchCity, setSearchCity] = useState('')
+  const [weatherObj, setWeatherObj] = useState<Weather | null>(null)
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchCity(e.target.value)
+  }
+
+  const handleClick = () => {
+    return getWeather(searchCity)
+      .then((obj) => {
+        setWeatherObj(obj)
+      })
+      .catch((err) => {
+        console.log('Err message: ' + err)
+      })
+  }
+
   return (
     <>
       <div className="container">
@@ -20,12 +40,22 @@ function WeatherCasting() {
               speed={1}
               style={{ width: '50px' }}
             />
-            <input type="text" placeholder="Enter your location" />
-            <button className="fa-solid">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
+            <div className="container-search">
+              <input
+                type="text"
+                value={searchCity}
+                onChange={handleChange}
+                placeholder="Enter your location"
+              />
+              <button onClick={handleClick} className="fa-solid">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </button>
+            </div>
           </div>
-          <h1 className="title">Weather Cast</h1>
+        </div>
+
+        <div>
+          <h1 className="title-2">{weatherObj?.name}</h1>
         </div>
 
         <div className="not-found">
