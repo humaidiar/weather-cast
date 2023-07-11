@@ -43,7 +43,7 @@ function WeatherCasting() {
             <input
               type="text"
               value={searchCity}
-              onChange={handleChange} 
+              onChange={handleChange}
               placeholder="Enter your location"
             />
             <button onClick={handleClick} className="fa-solid">
@@ -62,9 +62,11 @@ function WeatherCasting() {
         </div>
 
         <div className="weather-box">
-          <img src="" alt="" />
-          <p className="temperature"></p>
-          <p className="description"></p>
+          <img src="./img/clear.png" alt="" />
+          <p className="temperature">
+            20 <span>&#8451;</span>
+          </p>
+          <p className="description">Haze</p>
         </div>
 
         <div className="weather-details">
@@ -72,20 +74,17 @@ function WeatherCasting() {
             <i className="fa-solid">
               <FontAwesomeIcon icon={faWater} />
             </i>
-            <div className="text">
-              <span></span>
-              <p>Humidity</p>
-            </div>
 
-            <div className="wind">
-              <i className="fa-solid">
-                <FontAwesomeIcon icon={faWind} />
-              </i>
-              <div className="text">
-                <span></span>
-                <p>Wind Speed</p>
-              </div>
-            </div>
+            <span>20</span>
+            <p>Humidity</p>
+          </div>
+
+          <div className="wind">
+            <i className="fa-solid">
+              <FontAwesomeIcon icon={faWind} />
+            </i>
+            <span>20</span>
+            <p>Wind Speed</p>
           </div>
         </div>
       </div>
