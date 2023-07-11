@@ -2,7 +2,7 @@
 .container{
   position:relative;
   width: 400px;
-  height: 620px;
+  height: 640px;
   background: #fff;
   padding: 28px 32px;
   overflow: hidden;
@@ -118,9 +118,13 @@
 .container .weather-box {
   text-align: center;
 
+  h1{
+    font-size: 30px;
+    
+  }
+
   img{
     width: 60%;
-    margin: 20px;
   }
 
   .temperature{
@@ -168,13 +172,16 @@
     span{
       color:#06283D;
       font-size: 22px;
-      font-weight: 500;
+      font-weight: 800;
       margin-left: 10px;
+      padding: 12px;
+      border: 1px solid #06283D;
+      border-radius: 30px;
     }
 
     p{
       color: #06283D;
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 500;
       margin-left: 10px;
     }

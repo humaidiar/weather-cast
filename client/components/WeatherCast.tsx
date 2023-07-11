@@ -52,38 +52,34 @@ function WeatherCasting() {
           </div>
         </div>
 
-        <div>
-          <h1 className="title-2">{weatherObj?.name}</h1>
-        </div>
-
         <div className="not-found">
           <img src="./img/404.png" alt="404" />
           <p>Sorry, Invalid Location</p>
         </div>
 
         <div className="weather-box">
+          <h1 className="title-2">{weatherObj?.name}</h1>
           <img src="./img/clear.png" alt="" />
           <p className="temperature">
-            20 <span>&#8451;</span>
+            {weatherObj?.temp} <span>&#8451;</span>
           </p>
-          <p className="description">Haze</p>
+          <p className="description">{weatherObj?.description}</p>
         </div>
 
         <div className="weather-details">
           <div className="humidity">
-            <i className="fa-solid">
+            {/* <i className="fa-solid">
               <FontAwesomeIcon icon={faWater} />
-            </i>
-
-            <span>20</span>
+            </i> */}
+            <span>{weatherObj?.humidity}%</span>
             <p>Humidity</p>
           </div>
 
           <div className="wind">
-            <i className="fa-solid">
+            {/* <i className="fa-solid">
               <FontAwesomeIcon icon={faWind} />
-            </i>
-            <span>20</span>
+            </i> */}
+            <span>{weatherObj?.speed} km/h</span>
             <p>Wind Speed</p>
           </div>
         </div>
