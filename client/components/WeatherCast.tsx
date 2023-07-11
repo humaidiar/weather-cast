@@ -32,25 +32,23 @@ function WeatherCasting() {
     <>
       <div className="container">
         <div className="search-box">
+          <Player
+            src="https://lottie.host/b4b1c0ab-43e9-45e1-b78e-7304d8baaa2b/rHqk1E7Wz1.json"
+            loop
+            autoplay
+            speed={1}
+            style={{ width: '50px' }}
+          />
           <div className="container-info">
-            <Player
-              src="https://lottie.host/b4b1c0ab-43e9-45e1-b78e-7304d8baaa2b/rHqk1E7Wz1.json"
-              loop
-              autoplay
-              speed={1}
-              style={{ width: '50px' }}
+            <input
+              type="text"
+              value={searchCity}
+              onChange={handleChange} 
+              placeholder="Enter your location"
             />
-            <div className="container-search">
-              <input
-                type="text"
-                value={searchCity}
-                onChange={handleChange}
-                placeholder="Enter your location"
-              />
-              <button onClick={handleClick} className="fa-solid">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </button>
-            </div>
+            <button onClick={handleClick} className="fa-solid">
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
           </div>
         </div>
 
