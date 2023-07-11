@@ -2,7 +2,7 @@
 .container{
   position:relative;
   width: 400px;
-  height: 640px;
+  height: 60px;
   background: #fff;
   padding: 28px 32px;
   overflow: hidden;
@@ -98,20 +98,6 @@
       }
 }
 
-// trigger to activate the motion 
-
-/* later
-.search-box .title{
-  display: none;
-  margin: 0 auto;
-  padding-left: 10px;
-  color: #031722;
-  transition: 0.5s ease;
-}
-.search-box .title.active{
- display: none;
-}
-*/
 
 
 /* Weather */
@@ -192,10 +178,9 @@
 }
 
 
-
 .weather-box, .weather-details{
-  scale:1;
-  opacity: 1;
+  scale:0;
+  opacity:0;
 }
 
 .fadeIn{
@@ -210,7 +195,7 @@
   }
 }
 
-
+//// Later ////
 .search-box .container-info.active{
   width: 80%;
  

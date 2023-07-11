@@ -1,9 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faMagnifyingGlass,
-  faWater,
-  faWind,
-} from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 import { Player } from '@lottiefiles/react-lottie-player'
 import { ChangeEvent, useState } from 'react'
@@ -68,17 +64,11 @@ function WeatherCasting() {
 
         <div className="weather-details">
           <div className="humidity">
-            {/* <i className="fa-solid">
-              <FontAwesomeIcon icon={faWater} />
-            </i> */}
             <span>{weatherObj?.humidity}%</span>
             <p>Humidity</p>
           </div>
 
           <div className="wind">
-            {/* <i className="fa-solid">
-              <FontAwesomeIcon icon={faWind} />
-            </i> */}
             <span>{weatherObj?.speed} km/h</span>
             <p>Wind Speed</p>
           </div>

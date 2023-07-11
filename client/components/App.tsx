@@ -4,7 +4,7 @@ function App() {
   return (
     <>
       <header className="header">
-        <h1 style={{ color: 'white' }}>Daily Coding</h1>
+        <h1 style={{ color: 'white' }}>Weather App</h1>
       </header>
       <section className="main">
         <WeatherCasting />
