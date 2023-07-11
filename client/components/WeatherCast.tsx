@@ -27,7 +27,7 @@ function WeatherCasting() {
   const handleClick = () => {
     return getWeather(searchCity)
       .then((obj) => {
-        setWeatherObj(obj)
+        setWeatherObj(obj as Weather)
       })
       .catch((err) => {
         console.log('Err message: ' + err)
