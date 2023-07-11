@@ -7,8 +7,18 @@ import { Weather } from '../typing'
 import { getWeather } from '../apis/weatherDataApi'
 
 function WeatherCasting() {
+  const dataEmpty = {
+    name: '',
+    main: '',
+    description: '',
+    temp: 0,
+    humidity: 0,
+    speed: 0,
+    cod: 0,
+  } as Weather
+
   const [searchCity, setSearchCity] = useState('')
-  const [weatherObj, setWeatherObj] = useState<Weather | null>(null)
+  const [weatherObj, setWeatherObj] = useState<Weather>(dataEmpty)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchCity(e.target.value)

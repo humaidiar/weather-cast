@@ -16,7 +16,6 @@ export function getWeather(city: string) {
         temp: res.body.main.temp,
         cod: res.body.cod,
       }
-      console.log(WeatherData)
       return WeatherData
     })
     .catch((err) => console.log('Err message:' + err))
