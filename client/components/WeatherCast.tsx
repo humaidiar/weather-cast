@@ -23,15 +23,35 @@ function WeatherCasting() {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchCity(e.target.value)
   }
-
   const handleClick = () => {
-    return getWeather(searchCity)
-      .then((obj) => {
-        setWeatherObj(obj as Weather)
-      })
-      .catch((err) => {
-        console.log('Err message: ' + err)
-      })
+    return searchCity === ''
+      ? setErrorState()
+      : getWeather(searchCity)
+          .then((obj) => {
+            if (obj.cod === '404') {
+              setErrorState()
+            } else {
+              setWeatherObj(obj as Weather)
+            }
+          })
+          .catch((err) => {
+            console.log('Err message: ' + err)
+          })
+  }
+
+  function setErrorState() {
+    const container = document.querySelector('.container')
+    const weatherBox = document.querySelector('.weather-box')
+    const weatherDetails = document.querySelector('.weather-details')
+    const error404 = document.querySelector('.not-found')
+    const containerInfo = document.querySelector('.container-info')
+
+    container.style.height = '400px'
+    weatherBox.style.display = 'none'
+    weatherDetails.style.display = 'none'
+    error404.style.display = 'block'
+    error404.classList.add('fadeIn')
+    containerInfo.classList.remove('active')
   }
 
   return (
