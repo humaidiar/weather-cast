@@ -19,18 +19,22 @@ function WeatherCasting() {
 
   const [searchCity, setSearchCity] = useState('')
   const [weatherObj, setWeatherObj] = useState<Weather>(dataEmpty)
+  const [errorState, setErrorState] = useState(false)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchCity(e.target.value)
   }
   const handleClick = () => {
     return searchCity === ''
-      ? setErrorState()
+      ? (setErrorState(true), showError())
       : getWeather(searchCity)
           .then((obj) => {
             if (obj.cod === '404') {
-              setErrorState()
+              showError()
+              setErrorState(true)
             } else {
+              setErrorState(false)
+              WeatherShowing()
               setWeatherObj(obj as Weather)
             }
           })
@@ -39,19 +43,50 @@ function WeatherCasting() {
           })
   }
 
-  function setErrorState() {
-    const container = document.querySelector('.container')
-    const weatherBox = document.querySelector('.weather-box')
-    const weatherDetails = document.querySelector('.weather-details')
-    const error404 = document.querySelector('.not-found')
-    const containerInfo = document.querySelector('.container-info')
+  // to render pic weather according the API
+  const weatherPic = () => {
+    switch (weatherObj?.main) {
+      case 'Clear':
+        return './img/clear.png'
 
+      case 'Rain':
+        return './img/rain.png'
+
+      case 'Snow':
+        return './img/snow.png'
+
+      case 'Clouds':
+        return './img/cloud.png'
+
+      case 'Haze':
+        return './img/mist.png'
+
+      default:
+        return ''
+    }
+  }
+
+  // Render ErrorState && WeatherShowing
+  // Problem : After Showing Error and You type right City, it does not show the WeatherShowing Property
+
+  const container = document.querySelector('.container')
+  const weatherBox = document.querySelector('.weather-box')
+  const weatherDetails = document.querySelector('.weather-details')
+  const error404 = document.querySelector('.not-found')
+  const containerInfo = document.querySelector('.container-info')
+
+  const showError = () => {
     container.style.height = '400px'
     weatherBox.style.display = 'none'
     weatherDetails.style.display = 'none'
-    error404.style.display = 'block'
     error404.classList.add('fadeIn')
     containerInfo.classList.remove('active')
+  }
+
+  const WeatherShowing = () => {
+    weatherBox.classList.add('fadeIn')
+    weatherDetails.classList.add('fadeIn')
+    container.style.height = '590px'
   }
 
   return (
@@ -78,31 +113,35 @@ function WeatherCasting() {
           </div>
         </div>
 
-        <div className="not-found">
-          <img src="./img/404.png" alt="404" />
-          <p>Sorry, Invalid Location</p>
-        </div>
-
-        <div className="weather-box">
-          <h1 className="title-2">{weatherObj?.name}</h1>
-          <img src="./img/clear.png" alt="" />
-          <p className="temperature">
-            {weatherObj?.temp} <span>&#8451;</span>
-          </p>
-          <p className="description">{weatherObj?.description}</p>
-        </div>
-
-        <div className="weather-details">
-          <div className="humidity">
-            <span>{weatherObj?.humidity}%</span>
-            <p>Humidity</p>
+        {errorState ? (
+          <div className="not-found">
+            <img src="./img/404.png" alt="404" />
+            <p>Sorry, Invalid Location</p>
           </div>
+        ) : (
+          <>
+            <div className="weather-box">
+              <h1 className="title-2">{weatherObj?.name}</h1>
+              <img src={weatherPic()} alt={weatherObj?.main} />
+              <p className="temperature">
+                {weatherObj?.temp} <span>&#8451;</span>
+              </p>
+              <p className="description">{weatherObj?.description}</p>
+            </div>
 
-          <div className="wind">
-            <span>{weatherObj?.speed} km/h</span>
-            <p>Wind Speed</p>
-          </div>
-        </div>
+            <div className="weather-details">
+              <div className="humidity">
+                <span>{weatherObj?.humidity}%</span>
+                <p>Humidity</p>
+              </div>
+
+              <div className="wind">
+                <span>{weatherObj?.speed} km/h</span>
+                <p>Wind Speed</p>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   )
