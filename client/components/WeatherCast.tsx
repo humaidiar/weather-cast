@@ -29,7 +29,7 @@ function WeatherCasting() {
       ? (setErrorState(true), showingPage())
       : getWeather(searchCity)
           .then((obj) => {
-            if (obj.cod === '404') {
+            if (obj.cod === 404) {
               showingPage()
               setErrorState(true)
             } else {
