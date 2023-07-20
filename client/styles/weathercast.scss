@@ -89,7 +89,8 @@
 
 
       img{
-        width: 70%;
+        width: 30%;
+        margin-bottom: 2em;
       }
 
       p{
@@ -109,7 +110,7 @@
   }
 
   img{
-    width: 40%;
+    width: 30%;
   }
 
   .temperature{
@@ -178,8 +179,8 @@
 
 
 .weather-box, .weather-details{
-  scale:0;
-  opacity:0;
+  scale:1;
+  opacity:1;
 }
 
 .fadeIn{

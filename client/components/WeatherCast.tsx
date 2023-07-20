@@ -26,15 +26,15 @@ function WeatherCasting() {
   }
   const handleClick = () => {
     return searchCity === ''
-      ? (setErrorState(true), showError())
+      ? (setErrorState(true), showingPage())
       : getWeather(searchCity)
           .then((obj) => {
             if (obj.cod === '404') {
-              showError()
+              showingPage()
               setErrorState(true)
             } else {
               setErrorState(false)
-              WeatherShowing()
+              showingPage()
               setWeatherObj(obj as Weather)
             }
           })
@@ -67,26 +67,11 @@ function WeatherCasting() {
   }
 
   // Render ErrorState && WeatherShowing
-  // Problem : After Showing Error and You type right City, it does not show the WeatherShowing Property
+  // Problem : After Showing Error and You type right City, it does not show the WeatherShowing Property *Fixed
 
-  const container = document.querySelector('.container')
-  const weatherBox = document.querySelector('.weather-box')
-  const weatherDetails = document.querySelector('.weather-details')
-  const error404 = document.querySelector('.not-found')
-  const containerInfo = document.querySelector('.container-info')
-
-  const showError = () => {
-    container.style.height = '400px'
-    weatherBox.style.display = 'none'
-    weatherDetails.style.display = 'none'
-    error404.classList.add('fadeIn')
-    containerInfo.classList.remove('active')
-  }
-
-  const WeatherShowing = () => {
-    weatherBox.classList.add('fadeIn')
-    weatherDetails.classList.add('fadeIn')
-    container.style.height = '590px'
+  const showingPage = () => {
+    const container = document.querySelector('.container')
+    container.style.height = '550px'
   }
 
   return (
@@ -105,7 +90,7 @@ function WeatherCasting() {
               type="text"
               value={searchCity}
               onChange={handleChange}
-              placeholder="Enter your location"
+              placeholder="Enter your city"
             />
             <button onClick={handleClick} className="fa-solid">
               <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -116,7 +101,7 @@ function WeatherCasting() {
         {errorState ? (
           <div className="not-found">
             <img src="./img/404.png" alt="404" />
-            <p>Sorry, Invalid Location</p>
+            <h1>Sorry, Invalid Location</h1>
           </div>
         ) : (
           <>
