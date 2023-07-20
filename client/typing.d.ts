@@ -7,5 +7,11 @@ export interface Weather {
   humidity: number
   speed: number
   cod: number
- 
+}
+
+export interface OptionType {
+  name: string
+  lat: number
+  lon: number
+  country: string
 }

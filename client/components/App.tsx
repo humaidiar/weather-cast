@@ -1,4 +1,5 @@
-import WeatherCasting from './WeatherCast'
+import WeatherCastingTwo from './Forecast'
+// import WeatherCasting from './WeatherCast'
 
 function App() {
   return (
@@ -7,7 +8,8 @@ function App() {
         <h1 style={{ color: 'white' }}>Weather App</h1>
       </header>
       <section className="main">
-        <WeatherCasting />
+        {/* <WeatherCasting /> */}
+        <WeatherCastingTwo />
       </section>
     </>
   )

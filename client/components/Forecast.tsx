@@ -3,10 +3,10 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 import { Player } from '@lottiefiles/react-lottie-player'
 import { ChangeEvent, useState } from 'react'
-import { Weather } from '../typing'
+import { Weather, OptionType } from '../typing'
 import { getWeather } from '../apis/weatherDataApi'
 
-function WeatherCasting() {
+const WeatherCastingTwo = (): JSX.Element => {
   const dataEmpty = {
     name: '',
     main: '',
@@ -16,14 +16,40 @@ function WeatherCasting() {
     speed: 0,
     cod: 0,
   } as Weather
-  
+
   const [searchCity, setSearchCity] = useState('')
+  const [options, setOptions] = useState<[]>([])
   const [weatherObj, setWeatherObj] = useState<Weather>(dataEmpty)
   const [errorState, setErrorState] = useState(false)
+  const [term, setTerm] = useState('')
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchCity(e.target.value)
+  const getSearchOption = (value: string) => {
+    //get the city list
+    fetch(
+      `https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=3&appid=${
+        process.env.WEATHER_KEY
+      }`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setOptions(data)
+      })
+      .catch((err) => console.log('Err message:' + err))
   }
+
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // trim for not trigger the api call when you enter space in your input
+    const value = e.target.value.trim()
+    setTerm(value)
+    if (value === '') return
+    getSearchOption(value)
+  }
+
+  const onOptionSelect = (option: OptionType) => {
+    setSearchCity(option.name)
+  }
+
   const handleClick = () => {
     return searchCity === ''
       ? (setErrorState(true), showingPage())
@@ -88,8 +114,8 @@ function WeatherCasting() {
           <div className="container-info">
             <input
               type="text"
-              value={searchCity}
-              onChange={handleChange}
+              value={term}
+              onChange={onInputChange}
               placeholder="Enter your city"
             />
             <button onClick={handleClick} className="fa-solid">
@@ -97,6 +123,15 @@ function WeatherCasting() {
             </button>
           </div>
         </div>
+        <ul>
+          {options.map((option: OptionType, index: number) => (
+            <li key={option.name + '-' + index}>
+              <button onClick={() => onOptionSelect(option)}>
+                {option.name},{option.country}
+              </button>
+            </li>
+          ))}
+        </ul>
 
         {errorState ? (
           <div className="not-found">
@@ -132,4 +167,4 @@ function WeatherCasting() {
   )
 }
 
-export default WeatherCasting
+export default WeatherCastingTwo
