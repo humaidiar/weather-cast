@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 import { Player } from '@lottiefiles/react-lottie-player'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Weather, OptionType } from '../typing'
 import { getWeather } from '../apis/weatherDataApi'
 
@@ -17,18 +17,19 @@ const WeatherCastingTwo = (): JSX.Element => {
     cod: 0,
   } as Weather
 
-  const [searchCity, setSearchCity] = useState('')
+  const [searchCity, setSearchCity] = useState<OptionType | null>(null)
   const [options, setOptions] = useState<[]>([])
+
   const [weatherObj, setWeatherObj] = useState<Weather>(dataEmpty)
   const [errorState, setErrorState] = useState(false)
   const [term, setTerm] = useState('')
 
   const getSearchOption = (value: string) => {
-    //get the city list
+    //get the city list using geocoding
     fetch(
       `https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=3&appid=${
         process.env.WEATHER_KEY
-      }`
+      }&lang=en`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -47,15 +48,16 @@ const WeatherCastingTwo = (): JSX.Element => {
   }
 
   const onOptionSelect = (option: OptionType) => {
-    setSearchCity(option.name)
+    setSearchCity(option)
   }
 
   const handleClick = () => {
-    return searchCity === ''
+    const cityName = (searchCity?.name as string) || term
+    return cityName === ''
       ? (setErrorState(true), showingPage())
-      : getWeather(searchCity)
+      : getWeather(cityName)
           .then((obj) => {
-            if (obj.cod === 404) {
+            if (obj.cod === '404') {
               showingPage()
               setErrorState(true)
             } else {
@@ -68,6 +70,13 @@ const WeatherCastingTwo = (): JSX.Element => {
             console.log('Err message: ' + err)
           })
   }
+
+  useEffect(() => {
+    if (searchCity) {
+      setTerm(searchCity.name)
+      setOptions([])
+    }
+  }, [searchCity])
 
   // to render pic weather according the API
   const weatherPic = () => {
@@ -146,7 +155,7 @@ const WeatherCastingTwo = (): JSX.Element => {
               <p className="temperature">
                 {weatherObj?.temp} <span>&#8451;</span>
               </p>
-              <p className="description">{weatherObj?.description}</p>
+              <p className="description">{weatherObj?.main}</p>
             </div>
 
             <div className="weather-details">

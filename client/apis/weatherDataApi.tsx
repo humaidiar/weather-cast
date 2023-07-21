@@ -4,9 +4,10 @@ import { Weather } from '../typing'
 export function getWeather(city: string) {
   return request
     .get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.WEATHER_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.WEATHER_KEY}&lang=en&units=metric`
     )
     .then((res) => {
+      console.log(res.body)
       const WeatherData: Weather = {
         name: res.body.name,
         main: res.body.weather[0].main,
